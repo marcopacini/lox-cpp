@@ -3,6 +3,7 @@ vpath %.cpp	src
 
 OBJDIR = bin
 OBJ = $(addprefix $(OBJDIR)/, main.o token.o)
+CXXFLAGS = -std=c++17 -Wall -pedantic
 
 all: lox-cpp
 

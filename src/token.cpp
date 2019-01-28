@@ -134,6 +134,71 @@ std::ostream& operator<<(std::ostream& os, const TokenType type) {
             break;
         }
 
+        case TokenType::BREAK: {
+            os << "BREAK";
+            break;
+        }
+
+        case TokenType::CLASS: {
+            os << "CLASS";
+            break;
+        }
+
+        case TokenType::CONTINUE: {
+            os << "CONTINUE";
+            break;
+        }
+
+        case TokenType::ELSE: {
+            os << "ELSE";
+            break;
+        }
+
+        case TokenType::FOR: {
+            os << "FOR";
+            break;
+        }
+
+        case TokenType::FUN: {
+            os << "FUN";
+            break;
+        }
+
+        case TokenType::IF: {
+            os << "IF";
+            break;
+        }
+
+        case TokenType::OR: {
+            os << "OR";
+            break;
+        }
+
+        case TokenType::PRINT: {
+            os << "PRINT";
+            break;
+        }
+
+        case TokenType::RETURN: {
+            os << "RETURN";
+            break;
+        }
+
+        case TokenType::THIS: {
+            os << "THIS";
+            break;
+        }
+
+        case TokenType::VAR: {
+            os << "VAR";
+            break;
+        }
+
+        case TokenType::WHILE: {
+            os << "WHILE";
+            break;
+        }
+
         case TokenType::END_OF_FILE: {
             os << "EOF";
             break;
