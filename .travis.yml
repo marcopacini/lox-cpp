@@ -1,0 +1,5 @@
+language: cpp
+sudo: false
+compiler: gcc
+os: linux
+script: make
