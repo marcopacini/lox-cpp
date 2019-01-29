@@ -1,3 +1,5 @@
 .idea/
+.scannerwork/
 bin/
 cmake-build-debug/
+bw-output/
