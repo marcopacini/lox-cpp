@@ -1,15 +1,18 @@
 dist: trusty
 language: cpp
 compiler: gcc
-
 before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
-
+- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+- sudo apt-get update -qq
 install:
-  - sudo apt-get install -qq g++-7
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-
+- sudo apt-get install -qq g++-7
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+addons:
+  sonarcloud:
+    organization: "marcopacini-github"
+    token:
+      secure: ZDdp9zuZVSe3VUI6ujqnCAxznODks73xCHxCvTruCYoWO1wJUptVliN3Fior3UUSjbeUY2rJdA5wJmk/iY7V1lhQLrDhTCuVQy0/CvHFoRGaIWtZBIaLoXM0Eunk2rjqu3rdRDVbJXtlZCIX/kk1s3Lf4JlNIkWNmj/BuNFi+478CjXr702R6Fiqig8iculDTURrHBORhdUqkXB+7NFV05xtePgz5NFVAlRdM5DoJrq65jUjUg5s4WZl9yqRXEqWrwN23FWb8VkXTQQYIeM9HXDau6qZWuOgm+iJfTemJ8gwLZCFVaSF8+4faJr6psL8uZFOby0yNEoAV6ebaQ2bppRqUjhVp3LekPznAvmsWc0iYPpm/2cl1VxrnxUyk/1rjTtXkEaEqyoyXeUCIuFGX5L4IeD0i0iegpwu2L7POEkY3ZdbjzBECRi2/Ri8CjIcD+kQXkntBl79NSoLHFsnj7tNB84iIQfs+xK6J1lvanYSXmXAKTAJczErGw2igVMokhhiHNZJF39fc0/HPbCO9NAtOjxaCFTyL22cHxh5YscuPtH/AYb85vg3PdeLs6a0D7E9lUfKv9jJrGWxjjon9/Eo0lb2Kp0JGClSook2A8y1o2ZRs2PwZNiR2fnT1vHtTD5DzGM/GQ777q6BG6g1bTWNCzHTUTmr+u6yKucotT4=
 script:
   - ./configure
   - make
+  - sonar-scanner
