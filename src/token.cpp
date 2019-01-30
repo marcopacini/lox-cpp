@@ -22,187 +22,55 @@
 
 #include "../include/token.h"
 
-std::ostream& operator<<(std::ostream& os, const TokenType type) {
-    switch (type) {
-        case TokenType::LEFT_PAREN: {
-            os << "LEFT_PAREN";
-            break;
-        }
-        case TokenType::RIGHT_PAREN: {
-            os << "RIGHT_PAREN";
-            break;
-        }
-        case TokenType::LEFT_SQUARE: {
-            os << "LEFT_SQUARE";
-            break;
-        }
-        case TokenType::RIGHT_SQUARE: {
-            os << "RIGHT_SQUARE";
-            break;
-        }
-        case TokenType::COMMA: {
-            os << "COMMA";
-            break;
-        }
-        case TokenType::DOT: {
-            os << "DOT";
-            break;
-        }
-        case TokenType::MINUS: {
-            os << "MINUS";
-            break;
-        }
-        case TokenType::PLUS: {
-            os << "PLUS";
-            break;
-        }
-        case TokenType::STAR: {
-            os << "STAR";
-            break;
-        }
-        case TokenType::SLASH: {
-            os << "SLASH";
-            break;
-        }
-        case TokenType::SEMICOLON: {
-            os << "SEMICOLON";
-            break;
-        }
-        case TokenType::NOT: {
-            os << "NOT";
-            break;
-        }
-        case TokenType::NOT_EQUAL: {
-            os << "NOT_EQUAL";
-            break;
-        }
-        case TokenType::EQUAL: {
-            os << "EQUAL";
-            break;
-        }
-        case TokenType::EQUAL_EQUAL: {
-            os << "EQUAL_EQUAL";
-            break;
-        }
-        case TokenType::LESS: {
-            os << "LESS";
-            break;
-        }
-        case TokenType::LESS_EQUAL: {
-            os << "LESS_EQUAL";
-            break;
-        }
-        case TokenType::GREATER: {
-            os << "GREATER";
-            break;
-        }
-        case TokenType::GREATER_EQUAL: {
-            os << "GREATER_EQUAL";
-            break;
-        }
-        case TokenType::STRING: {
-            os << "STRING";
-            break;
-        }
-        case TokenType::NUMBER: {
-            os << "NUMBER";
-            break;
-        }
+#include <unordered_map>
 
-        case TokenType::IDENTIFIER: {
-            os << "IDENTIFIER";
-            break;
-        }
+std::ostream& operator<<(std::ostream& os, const TokenType type)
+{
+    const static std::unordered_map<TokenType, std::string> map = {
+            { TokenType::AND, "AND" },
+            { TokenType::BREAK, "BREAK" },
+            { TokenType::CLASS, "CLASS" },
+            { TokenType::COMMA, "COMMA" },
+            { TokenType::CONTINUE, "CONTINUE" },
+            { TokenType::DOT, "DOT" },
+            { TokenType::ELSE, "ELSE" },
+            { TokenType::END_OF_FILE, "EOF" },
+            { TokenType::EQUAL, "EQUAL" },
+            { TokenType::EQUAL_EQUAL, "EQUAL_EQUAL" },
+            { TokenType::FALSE, "FALSE" },
+            { TokenType::FOR, "FOR" },
+            { TokenType::FUN, "FUN" },
+            { TokenType::GREATER, "GREATER" },
+            { TokenType::GREATER_EQUAL, "GREATER_EQUAL" },
+            { TokenType::IDENTIFIER, "IDENTIFIER" },
+            { TokenType::IF, "IF" },
+            { TokenType::LEFT_PAREN, "LEFT_PAREN" },
+            { TokenType::LEFT_SQUARE, "LEFT_SQUARE" },
+            { TokenType::LESS, "LESS" },
+            { TokenType::LESS_EQUAL, "LESS_EQUAL" },
+            { TokenType::MINUS, "MINUS" },
+            { TokenType::NIL, "NIL" },
+            { TokenType::NOT, "NOT" },
+            { TokenType::NOT_EQUAL, "NOT_EQUAL" },
+            { TokenType::NUMBER, "NUMBER" },
+            { TokenType::OR, "OR" },
+            { TokenType::PLUS, "PLUS" },
+            { TokenType::PRINT, "PRINT" },
+            { TokenType::RIGHT_PAREN, "RIGHT_PAREN" },
+            { TokenType::RIGHT_SQUARE, "RIGHT_SQUARE" },
+            { TokenType::SEMICOLON, "SEMICOLON" },
+            { TokenType::SLASH, "SLASH" },
+            { TokenType::STAR, "STAR" },
+            { TokenType::STRING, "STRING" },
+            { TokenType::THIS, "THIS" },
+            { TokenType::TRUE, "TRUE" },
+            { TokenType::VAR, "VAR" },
+            { TokenType::WHILE, "WHILE" }
+    };
 
-        case TokenType::TRUE: {
-            os << "TRUE";
-            break;
-        }
-
-        case TokenType::FALSE: {
-            os << "FALSE";
-            break;
-        }
-
-        case TokenType::NIL: {
-            os << "NIL";
-            break;
-        }
-
-        case TokenType::AND: {
-            os << "AND";
-            break;
-        }
-
-        case TokenType::BREAK: {
-            os << "BREAK";
-            break;
-        }
-
-        case TokenType::CLASS: {
-            os << "CLASS";
-            break;
-        }
-
-        case TokenType::CONTINUE: {
-            os << "CONTINUE";
-            break;
-        }
-
-        case TokenType::ELSE: {
-            os << "ELSE";
-            break;
-        }
-
-        case TokenType::FOR: {
-            os << "FOR";
-            break;
-        }
-
-        case TokenType::FUN: {
-            os << "FUN";
-            break;
-        }
-
-        case TokenType::IF: {
-            os << "IF";
-            break;
-        }
-
-        case TokenType::OR: {
-            os << "OR";
-            break;
-        }
-
-        case TokenType::PRINT: {
-            os << "PRINT";
-            break;
-        }
-
-        case TokenType::RETURN: {
-            os << "RETURN";
-            break;
-        }
-
-        case TokenType::THIS: {
-            os << "THIS";
-            break;
-        }
-
-        case TokenType::VAR: {
-            os << "VAR";
-            break;
-        }
-
-        case TokenType::WHILE: {
-            os << "WHILE";
-            break;
-        }
-
-        case TokenType::END_OF_FILE: {
-            os << "EOF";
-            break;
-        }
+    auto it = map.find(type);
+    if (it != map.end()) {
+        os << it->second;
     }
 
     return os;
