@@ -69,6 +69,7 @@ std::ostream& operator<<(std::ostream& os, const TokenType type)
     };
 
     auto it = map.find(type);
+
     if (it != map.end()) {
         os << it->second;
     }
@@ -76,7 +77,7 @@ std::ostream& operator<<(std::ostream& os, const TokenType type)
     return os;
 }
 
-Token::Token(TokenType type, std::string lexeme, int line, int position):
+Token::Token(TokenType type, std::string lexeme, unsigned int line, unsigned int position):
         type_(type),
         lexeme_(std::move(lexeme)),
         line_(line),
@@ -93,12 +94,12 @@ std::string Token::lexeme() const
     return lexeme_;
 }
 
-int Token::line() const
+unsigned int Token::line() const
 {
     return line_;
 }
 
-int Token::position() const
+unsigned int Token::position() const
 {
     return position_;
 }

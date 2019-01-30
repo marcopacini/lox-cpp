@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
 
-#include "../include/token.h"
+void usage()
+{
+    std::cout << "usage: lox-cpp [script]" << std::endl;
+}
 
 int main(int argc, char* argv[])
 {
-    Token token(TokenType::STRING, "Hello, World!", 1, 1);
-    std::cout << token << std::endl;
-
+    usage();
     return 0;
 }
-

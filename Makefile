@@ -2,15 +2,24 @@ vpath %.h	include
 vpath %.cpp	src
 
 OBJDIR = bin
-OBJ = $(addprefix $(OBJDIR)/, main.o token.o)
+OBJ = $(addprefix $(OBJDIR)/, token.o)
 CXXFLAGS = -std=c++17 -Wall -pedantic
 
-all: lox-cpp
+all: lox-cpp test
+
+run: lox-cpp
+	./bin/lox-cpp
 
 debug: CXXFLAGS += -DDEBUG -g
 debug: lox-cpp
 
-lox-cpp: $(OBJ)
+test: run-test
+	./bin/run-test
+
+run-test: $(OBJDIR)/test.o $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/$@ $^
+
+lox-cpp: $(OBJDIR)/main.o $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/$@ $^
 
 $(OBJDIR)/%.o: %.cpp
