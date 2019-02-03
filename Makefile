@@ -25,6 +25,7 @@ test: $(OBJDIR)/test.o $(OBJ)
 
 coverage:
 	mkdir -p coverage
+	mv $(OBJDIR)/*.gcda src/
 	mv $(OBJDIR)/*.gcno src/
 	gcov src/test.cpp
 	mv *.gcov coverage/
