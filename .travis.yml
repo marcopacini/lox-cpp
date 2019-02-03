@@ -16,5 +16,5 @@ script:
   - ./configure
   - build-wrapper-linux-x86-64 --out-dir bw-output make test
   - ls
-  - cat report.xml
+  - realpath report.xml
   - sonar-scanner
