@@ -5,28 +5,23 @@ OBJDIR = bin
 OBJ = $(addprefix $(OBJDIR)/, token.o)
 CXXFLAGS = -std=c++17 -Wall -pedantic
 
-all: lox-cpp test
-
-run: lox-cpp
-	./bin/lox-cpp
+.PHONE run:
+	$(MAKE) build
+	./$(OBJDIR)/lox
 
 debug: CXXFLAGS += -DDEBUG -g
-debug: lox-cpp
+debug: build
 
-test: run-test
-	./bin/run-test
+build: $(OBJDIR)/main.o $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/lox $^
 
-run-test: $(OBJDIR)/test.o $(OBJ)
+test: CXXFLAGS += -fprofile-arcs -ftest-coverage
+test: $(OBJDIR)/test.o $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/$@ $^
-
-lox-cpp: $(OBJDIR)/main.o $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/$@ $^
+	./$(OBJDIR)/$@ -r junit > report.xml
 
 $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-.PHONY: clean
-
-clean:
-	rm -f $(OBJDIR)/lox-cpp
-	find . -type f -name '*.o' -exec rm {} +
+.PHONY clean:
+	rm -f $(OBJDIR)/*
