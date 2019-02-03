@@ -5,23 +5,35 @@ OBJDIR = bin
 OBJ = $(addprefix $(OBJDIR)/, token.o)
 CXXFLAGS = -std=c++17 -Wall -pedantic
 
-.PHONE run:
+.PHONY: run coverage clean
+
+run:
 	$(MAKE) build
 	./$(OBJDIR)/lox
 
 debug: CXXFLAGS += -DDEBUG -g
 debug: build
 
-build: $(OBJDIR)/main.o $(OBJ)
+build: src/main.o $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/lox $^
 
 test: CXXFLAGS += -fprofile-arcs -ftest-coverage
 test: $(OBJDIR)/test.o $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/$@ $^
-	./$(OBJDIR)/$@ -r junit > report.xml
+	./$(OBJDIR)/$@
+	$(MAKE) coverage
+
+coverage:
+	mkdir -p coverage
+	mv $(OBJDIR)/*.gcno src/
+	gcov src/test.cpp
+	mv *.gcov coverage/
 
 $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-.PHONY clean:
+clean:
 	rm -f $(OBJDIR)/*
+	rm -f coverage/*
+	find . -type f -name '*.gcda' -exec rm {} +
+	find . -type f -name '*.gcno' -exec rm {} +

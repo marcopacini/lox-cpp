@@ -1,6 +1,6 @@
 .idea/
 .scannerwork/
 bin/
-cmake-build-debug/
 bw-output/
-report.xml
+cmake-build-debug/
+coverage/
