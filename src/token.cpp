@@ -77,11 +77,10 @@ std::ostream& operator<<(std::ostream& os, const TokenType type)
     return os;
 }
 
-Token::Token(TokenType type, std::string lexeme, unsigned int line, unsigned int position):
-        type_(type),
-        lexeme_(std::move(lexeme)),
-        line_(line),
-        position_(position)
+Token::Token(TokenType type, std::string lexeme, unsigned int line):
+    type_(type),
+    lexeme_(std::move(lexeme)),
+    line_(line)
 {}
 
 TokenType Token::type() const
@@ -99,11 +98,6 @@ unsigned int Token::line() const
     return line_;
 }
 
-unsigned int Token::position() const
-{
-    return position_;
-}
-
 std::ostream& operator<<(std::ostream& os, const Token& t) {
-    return os << t.type_ << " " << t.lexeme_ << " " << t.line_ << " " << t.position();
+    return os << t.type_ << " " << t.lexeme_ << " " << t.line_;
 }

@@ -20,72 +20,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#ifndef LOX_CPP_TOKEN_H
-#define LOX_CPP_TOKEN_H
+#ifndef LOX_CPP_SCANNER_H
+#define LOX_CPP_SCANNER_H
 
 #include <iostream>
+#include <map>
 #include <string>
+#include <vector>
 
-enum class TokenType {
-    AND,
-    BREAK,
-    CLASS,
-    COMMA,
-    CONTINUE,
-    DOT,
-    ELSE,
-    EQUAL,
-    EQUAL_EQUAL,
-    END_OF_FILE, // EOF is already defined in stdio.h
-    FALSE,
-    FOR,
-    FUN,
-    GREATER,
-    GREATER_EQUAL,
-    IDENTIFIER,
-    IF,
-    LEFT_PAREN,
-    LEFT_SQUARE,
-    LESS,
-    LESS_EQUAL,
-    MINUS,
-    NIL,
-    NOT,
-    NOT_EQUAL,
-    NUMBER,
-    OR,
-    PLUS,
-    PRINT,
-    RETURN,
-    RIGHT_PAREN,
-    RIGHT_SQUARE,
-    SEMICOLON,
-    SLASH,
-    STAR,
-    STRING,
-    THIS,
-    TRUE,
-    VAR,
-    WHILE
-};
+#include "../include/token.h"
 
-#define NUM_TOKEN_TYPE 40
-
-std::ostream& operator<<(std::ostream&, TokenType);
-
-class Token {
+class Scanner {
 public:
-    explicit Token(TokenType, std::string, unsigned int);
-    TokenType type() const;
-    std::string lexeme() const;
-    unsigned int line() const;
-    unsigned int position() const;
-    friend std::ostream& operator<<(std::ostream&, const Token&);
+    explicit Scanner(std::string);
+    std::vector<Token> scanToken();
 
 private:
-    TokenType type_;
-    std::string lexeme_;
-    unsigned int line_;
+    std::string source_;
+    unsigned long start_, current_;
+    int line_;
+    static const std::map<std::string, TokenType> keywords_;
+
+    bool isEnd();
+    bool isDigit(char);
+    bool isAlphadigit(char);
+    bool match(char);
+    char peek();
+    char peekNext();
+    char advance();
 };
 
-#endif //LOX_CPP_TOKEN_H
+#endif //LOX_CPP_SCANNER_H

@@ -38,14 +38,13 @@ TEST_CASE("Token class", "[token]")
 {
     TokenType tokenType = TokenType::WHILE;
     std::string lexeme = "while";
-    unsigned int line = 1, position = 1;
+    unsigned int line = 1;
 
     Token token(tokenType, lexeme, line, position);
 
     REQUIRE(tokenType == token.type());
     REQUIRE(lexeme == token.lexeme());
     REQUIRE(line == token.line());
-    REQUIRE(position == token.position());
 
     std::stringstream ss;
     ss << token;

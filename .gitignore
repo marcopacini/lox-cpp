@@ -3,4 +3,7 @@
 bin/
 bw-output/
 cmake-build-debug/
-coverage/
+*.gcda
+*.gcno
+*.gcov
+*.o
