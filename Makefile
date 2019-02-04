@@ -17,24 +17,21 @@ debug: build
 build: src/main.o $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/lox $^
 
-test: CXXFLAGS += -fprofile-arcs -ftest-coverage
+# -lgcov -fprofile-arcs -ftest-coverage
+test: CXXFLAGS += --coverage
 test: $(OBJDIR)/test.o $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/$@ $^
 	./$(OBJDIR)/$@
-	$(MAKE) coverage
 
 coverage:
-	mkdir -p coverage
 	mv $(OBJDIR)/*.gcda src/
 	mv $(OBJDIR)/*.gcno src/
-	gcov src/test.cpp src/token.cpp
-	mv *.gcov coverage/
+	gcov src/test.cpp src/token.cpp > /dev/null
 
 $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJDIR)/*
-	rm -f coverage/*
 	find . -type f -name '*.gcda' -exec rm {} +
 	find . -type f -name '*.gcno' -exec rm {} +

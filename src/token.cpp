@@ -105,5 +105,5 @@ unsigned int Token::position() const
 }
 
 std::ostream& operator<<(std::ostream& os, const Token& t) {
-    return os << t.type_ << " " << t.lexeme_ << " " << t.line_;
+    return os << t.type_ << " " << t.lexeme_ << " " << t.line_ << " " << t.position();
 }

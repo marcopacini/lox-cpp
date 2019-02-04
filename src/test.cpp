@@ -25,7 +25,16 @@
 #include "../include/catch.hpp"
 #include "../include/token.h"
 
-TEST_CASE("creating a token", "[token]")
+TEST_CASE("TokenType enum", "[token]")
+{
+    TokenType tokenType = TokenType::WHILE;
+    std::stringstream ss;
+
+    ss << tokenType;
+    REQUIRE(ss.str() == "WHILE");
+}
+
+TEST_CASE("Token class", "[token]")
 {
     TokenType tokenType = TokenType::WHILE;
     std::string lexeme = "while";
@@ -37,4 +46,9 @@ TEST_CASE("creating a token", "[token]")
     REQUIRE(lexeme == token.lexeme());
     REQUIRE(line == token.line());
     REQUIRE(position == token.position());
+
+    std::stringstream ss;
+    ss << token;
+
+    REQUIRE(ss.str() == "WHILE while 1 1");
 }
