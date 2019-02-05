@@ -26,7 +26,7 @@ test: $(OBJDIR)/test.o $(OBJ)
 coverage:
 	mv $(OBJDIR)/*.gcda src/
 	mv $(OBJDIR)/*.gcno src/
-	gcov src/test.cpp src/token.cpp > /dev/null
+	gcov src/test.cpp src/token.cpp src/scanner.cpp > /dev/null
 
 $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
