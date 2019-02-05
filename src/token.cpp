@@ -98,6 +98,11 @@ unsigned int Token::line() const
     return line_;
 }
 
+bool Token::operator==(const Token& t) const
+{
+    return (type_ == t.type()) && (lexeme_ == t.lexeme()) && (line_ == t.line());
+}
+
 std::ostream& operator<<(std::ostream& os, const Token& t) {
     return os << t.type_ << " " << t.lexeme_ << " " << t.line_;
 }

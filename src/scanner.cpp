@@ -40,7 +40,7 @@ const std::map<std::string, TokenType> Scanner::keywords_ = { // NOLINT(cert-err
         { "or",         TokenType::OR },
         { "print",      TokenType::PRINT },
         { "return",     TokenType::RETURN },
-        { "super",      TokenType::THIS },
+        { "this",      TokenType::THIS },
         { "true",       TokenType::TRUE },
         { "var",        TokenType::VAR },
         { "while",      TokenType::WHILE }

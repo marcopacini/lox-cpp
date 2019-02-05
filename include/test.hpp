@@ -20,73 +20,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#ifndef LOX_CPP_TOKEN_H
-#define LOX_CPP_TOKEN_H
+#ifndef LOX_CPP_TEST_HPP
+#define LOX_CPP_TEST_HPP
 
-#include <iostream>
-#include <string>
+#define CATCH_CONFIG_MAIN
+#include "../include/catch.hpp"
 
-enum class TokenType {
-    AND,
-    BREAK,
-    CLASS,
-    COMMA,
-    CONTINUE,
-    DOT,
-    ELSE,
-    EQUAL,
-    EQUAL_EQUAL,
-    END_OF_FILE, // EOF is already defined in stdio.h
-    FALSE,
-    FOR,
-    FUN,
-    GREATER,
-    GREATER_EQUAL,
-    IDENTIFIER,
-    IF,
-    LEFT_PAREN,
-    LEFT_SQUARE,
-    LESS,
-    LESS_EQUAL,
-    MINUS,
-    NIL,
-    NOT,
-    NOT_EQUAL,
-    NUMBER,
-    OR,
-    PLUS,
-    PRINT,
-    RETURN,
-    RIGHT_PAREN,
-    RIGHT_SQUARE,
-    SEMICOLON,
-    SLASH,
-    STAR,
-    STRING,
-    THIS,
-    TRUE,
-    VAR,
-    WHILE
-};
-
-#define NUM_TOKEN_TYPE 40
-
-std::ostream& operator<<(std::ostream&, TokenType);
-
-class Token {
-public:
-    explicit Token(TokenType, std::string, unsigned int);
-    TokenType type() const;
-    std::string lexeme() const;
-    unsigned int line() const;
-    unsigned int position() const;
-    bool operator==(const Token&) const;
-    friend std::ostream& operator<<(std::ostream&, const Token&);
-
-private:
-    TokenType type_;
-    std::string lexeme_;
-    unsigned int line_;
-};
-
-#endif //LOX_CPP_TOKEN_H
+#endif //LOX_CPP_TEST_HPP
