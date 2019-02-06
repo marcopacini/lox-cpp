@@ -48,14 +48,18 @@ void run() {
 }
 
 void run(const std::string& source) {
-    Scanner scanner(source);
-    std::vector<Token> tokens = scanner.scanToken();
+    try {
+        Scanner scanner(source);
+        auto tokens = scanner.scanToken();
 
-    #ifdef DEBUG
-    for (auto token : tokens) {
-        std::cout << token << std::endl;
+        #ifdef DEBUG
+        for (auto token : tokens) {
+            std::cout << token << std::endl;
+        }
+        #endif
+    } catch (const ScannerException& exception) {
+        std::cerr << exception.what() << std::endl;
     }
-    #endif
 }
 
 void runFile(const std::string& path) {

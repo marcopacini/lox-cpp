@@ -14,7 +14,7 @@ run:
 debug: CXXFLAGS += -D DEBUG -g
 debug: build
 
-build: src/main.o $(OBJ)
+build: $(OBJDIR)/main.o $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(OBJDIR)/lox $^
 
 # -lgcov -fprofile-arcs -ftest-coverage

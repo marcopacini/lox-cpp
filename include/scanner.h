@@ -50,4 +50,13 @@ private:
     char advance();
 };
 
+class ScannerException : public std::exception {
+public:
+    explicit ScannerException(std::string);
+    const char* what() const throw() override;
+
+private:
+    std::string what_;
+};
+
 #endif //LOX_CPP_SCANNER_H

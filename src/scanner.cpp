@@ -46,19 +46,23 @@ const std::map<std::string, TokenType> Scanner::keywords_ = { // NOLINT(cert-err
         { "while",      TokenType::WHILE }
 };
 
-bool Scanner::isEnd() {
+bool Scanner::isEnd()
+{
     return current_ >= source_.length();
 }
 
-bool Scanner::isDigit(char c) {
+bool Scanner::isDigit(char c)
+{
     return c >= '0' && c <= '9';
 }
 
-bool Scanner::isAlphadigit(char c) {
+bool Scanner::isAlphadigit(char c)
+{
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_') || isDigit(c);
 }
 
-bool Scanner::match(char c) {
+bool Scanner::match(char c)
+{
     if (isEnd() || source_[current_] != c) {
         return false;
     }
@@ -67,17 +71,20 @@ bool Scanner::match(char c) {
     return true;
 }
 
-char Scanner::peek() {
+char Scanner::peek()
+{
     if (isEnd()) return '\0';
     return source_[current_];
 }
 
-char Scanner::peekNext() {
+char Scanner::peekNext()
+{
     if (current_ + 1 >= source_.length()) return '\0';
     return source_[current_+1];
 }
 
-char Scanner::advance() {
+char Scanner::advance()
+{
     current_++;
     return source_[current_ - 1];
 }
@@ -97,101 +104,79 @@ std::vector<Token> Scanner::scanToken() {
 
         char c = advance();
         switch (c) {
-            case '\n': {
+            case '\n':
                 line_++;
                 break;
-            }
-            case '(': {
-                Token token(TokenType::LEFT_PAREN, "(", line_);
-                tokens.push_back(token);
+
+            case '(':
+                tokens.push_back(Token(TokenType::LEFT_PAREN, "(", line_));
                 break;
-            }
-            case ')': {
-                Token token(TokenType::RIGHT_PAREN, ")", line_);
-                tokens.push_back(token);
+
+            case ')':
+                tokens.push_back(Token(TokenType::RIGHT_PAREN, ")", line_));
                 break;
-            }
-            case '{': {
-                Token token(TokenType::LEFT_SQUARE, "{", line_);
-                tokens.push_back(token);
+
+            case '{':
+                tokens.push_back(Token(TokenType::LEFT_SQUARE, "{", line_));
                 break;
-            }
-            case '}': {
-                Token token(TokenType::RIGHT_SQUARE, "}", line_);
-                tokens.push_back(token);
+
+            case '}':
+                tokens.push_back(Token(TokenType::RIGHT_SQUARE, "}", line_));
                 break;
-            }
-            case ',': {
-                Token token(TokenType::COMMA, ",", line_);
-                tokens.push_back(token);
+
+            case ',':
+                tokens.push_back(Token(TokenType::COMMA, ",", line_));
                 break;
-            }
-            case '.': {
-                Token token(TokenType::DOT, ".", line_);
-                tokens.push_back(token);
+
+            case '.':
+                tokens.push_back(Token(TokenType::DOT, ".", line_));
                 break;
-            }
-            case '*': {
-                Token token(TokenType::STAR, "*", line_);
-                tokens.push_back(token);
+
+            case '*':
+                tokens.push_back(Token(TokenType::STAR, "*", line_));
                 break;
-            }
-            case '-': {
-                Token token(TokenType::MINUS, "-", line_);
-                tokens.push_back(token);
+
+            case '-':
+                tokens.push_back(Token(TokenType::MINUS, "-", line_));
                 break;
-            }
-            case '+': {
-                Token token(TokenType::PLUS, "+", line_);
-                tokens.push_back(token);
+
+            case '+':
+                tokens.push_back(Token(TokenType::PLUS, "+", line_));
                 break;
-            }
-            case ';': {
-                Token token(TokenType::SEMICOLON, ";", line_);
-                tokens.push_back(token);
+
+            case ';':
+                tokens.push_back(Token(TokenType::SEMICOLON, ";", line_));
                 break;
-            }
-            case '!': {
-                if (match('=')) {
-                    Token token(TokenType::NOT_EQUAL, "!=", line_);
-                    tokens.push_back(token);
-                } else {
-                    Token token(TokenType::NOT, "!", line_);
-                    tokens.push_back(token);
-                }
+
+            case '!':
+                if (match('='))
+                    tokens.push_back(Token(TokenType::NOT_EQUAL, "!=", line_));
+                else
+                    tokens.push_back(Token(TokenType::NOT, "!", line_));
                 break;
-            }
-            case '=': {
-                if (match('=')) {
-                    Token token(TokenType::EQUAL_EQUAL, "==", line_);
-                    tokens.push_back(token);
-                } else {
-                    Token token(TokenType::EQUAL, "=", line_);
-                    tokens.push_back(token);
-                }
+
+            case '=':
+                if (match('='))
+                    tokens.push_back(Token(TokenType::EQUAL_EQUAL, "==", line_));
+                else
+                    tokens.push_back(Token(TokenType::EQUAL, "=", line_));
                 break;
-            }
-            case '<': {
-                if (match('=')) {
-                    Token token(TokenType::LESS_EQUAL, "<=", line_);
-                    tokens.push_back(token);
-                } else {
-                    Token token(TokenType::LESS, "<", line_);
-                    tokens.push_back(token);
-                }
+
+            case '<':
+                if (match('='))
+                    tokens.push_back(Token(TokenType::LESS_EQUAL, "<=", line_));
+                else
+                    tokens.push_back(Token(TokenType::LESS, "<", line_));
                 break;
-            }
-            case '>': {
-                if (match('=')) {
-                    Token token(TokenType::GREATER_EQUAL, ">=", line_);
-                    tokens.push_back(token);
-                } else {
-                    Token token(TokenType::GREATER, ">", line_);
-                    tokens.push_back(token);
-                }
+
+            case '>':
+                if (match('='))
+                    tokens.push_back(Token(TokenType::GREATER_EQUAL, ">=", line_));
+                else
+                    tokens.push_back(Token(TokenType::GREATER, ">", line_));
                 break;
-            }
-            case '/': {
+
+            case '/':
                 if (match('/')) {
                     // one-line comment
                     while (peek() != '\n' && !isEnd()) advance();
@@ -206,24 +191,23 @@ std::vector<Token> Scanner::scanToken() {
                     tokens.push_back(token);
                 }
                 break;
-            }
-            case '"': {
+
+            case '"':
                 while (peek() != '"' && !isEnd()) {
                     if (peek() == '\n') line_++;
                     advance();
                 }
 
                 if (isEnd()) {
-                    throw "unterminated string";
+                    throw ScannerException("unterminated string: " + source_.substr(start_,current_));
                 }
 
                 advance(); // consume the closing " char
 
-                Token token(TokenType::STRING, source_.substr(start_+1,current_-start_-2), line_);
-                tokens.push_back(token);
+                tokens.push_back(Token(TokenType::STRING, source_.substr(start_+1,current_-start_-2), line_));
                 break;
-            }
-            default: {
+
+            default:
                 std::vector<char> ignore{' ', '\t', '\r'}; // skipping chars
                 if (std::find(ignore.begin(), ignore.end(), c) != ignore.end()) break;
 
@@ -252,20 +236,24 @@ std::vector<Token> Scanner::scanToken() {
                         type = it->second;
                     }
 
-                    Token token(type, lexeme, line_);
-                    tokens.push_back(token);
+                    tokens.push_back(Token(type, lexeme, line_));
                     break;
                 }
 
-                std::stringstream error;
-                error << "unknown chars sequence: <" << c << ">";
-                throw error;
-            }
+                throw ScannerException("unknown character " + c);
         }
     }
 
-    Token token(TokenType::END_OF_FILE, "", line_);
-    tokens.push_back(token);
+    tokens.push_back(Token(TokenType::END_OF_FILE, "", line_));
 
     return tokens;
+}
+
+ScannerException::ScannerException(std::string what):
+    what_(what)
+{}
+
+const char* ScannerException::what() const throw()
+{
+    return what_.c_str();
 }
