@@ -28,7 +28,7 @@
 #include <string>
 #include <vector>
 
-#include "../include/token.h"
+#include "token.hpp"
 
 class Scanner {
 public:
@@ -48,6 +48,10 @@ private:
     char peek();
     char peekNext();
     char advance();
+
+    Token scanString();
+    Token scanDigit();
+    Token scanAlphadigit();
 };
 
 class ScannerException : public std::exception {

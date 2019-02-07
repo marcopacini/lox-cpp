@@ -21,8 +21,8 @@
 //  SOFTWARE.
 
 #include "../include/test.hpp"
-#include "../include/scanner.h"
-#include "../include/token.h"
+#include "../include/scanner.hpp"
+#include "../include/token.hpp"
 
 #include <map>
 

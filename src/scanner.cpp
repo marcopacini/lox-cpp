@@ -24,7 +24,7 @@
 #include <utility>
 #include <sstream>
 
-#include "../include/scanner.h"
+#include "../include/scanner.hpp"
 
 const std::map<std::string, TokenType> Scanner::keywords_ = { // NOLINT(cert-err58-cpp)
         { "and",        TokenType::AND },
@@ -87,6 +87,50 @@ char Scanner::advance()
 {
     current_++;
     return source_[current_ - 1];
+}
+
+Token Scanner::scanString()
+{
+    while (peek() != '"' && !isEnd()) {
+        if (peek() == '\n') line_++;
+        advance();
+    }
+
+    if (isEnd()) {
+        throw ScannerException("unterminated string: " + source_.substr(start_,current_));
+    }
+
+    advance(); // consume the closing " char
+
+    return Token(TokenType::STRING, source_.substr(start_+1, current_-start_-2), line_);
+}
+
+Token Scanner::scanDigit()
+{
+    while (isDigit(peek())) advance();
+
+    if (peek() == '.' && isDigit(peekNext())) {
+        do {
+            advance();
+        } while (isDigit(peek()));
+    }
+
+    return Token(TokenType::NUMBER, source_.substr(start_, current_-start_), line_);
+}
+
+Token Scanner::scanAlphadigit()
+{
+    while (isAlphadigit(peek())) advance();
+
+    std::string lexeme = source_.substr(start_,current_-start_);
+    TokenType type = TokenType::IDENTIFIER;
+
+    auto it = keywords_.find(lexeme);
+    if (it != keywords_.end()) {
+        type = it->second;
+    }
+
+    return Token(type, lexeme, line_);
 }
 
 Scanner::Scanner(std::string source):
@@ -187,24 +231,12 @@ std::vector<Token> Scanner::scanToken() {
                         advance();
                     }
                 } else {
-                    Token token(TokenType::SLASH, "/", line_);
-                    tokens.push_back(token);
+                    tokens.push_back(Token(TokenType::SLASH, "/", line_));
                 }
                 break;
 
             case '"':
-                while (peek() != '"' && !isEnd()) {
-                    if (peek() == '\n') line_++;
-                    advance();
-                }
-
-                if (isEnd()) {
-                    throw ScannerException("unterminated string: " + source_.substr(start_,current_));
-                }
-
-                advance(); // consume the closing " char
-
-                tokens.push_back(Token(TokenType::STRING, source_.substr(start_+1,current_-start_-2), line_));
+                tokens.push_back(scanString());
                 break;
 
             default:
@@ -212,31 +244,12 @@ std::vector<Token> Scanner::scanToken() {
                 if (std::find(ignore.begin(), ignore.end(), c) != ignore.end()) break;
 
                 if (isDigit(c)) {
-                    while (isDigit(peek())) advance();
-
-                    if (peek() == '.' && isDigit(peekNext())) {
-                        do {
-                            advance();
-                        } while (isDigit(peek()));
-                    }
-
-                    Token token(TokenType::NUMBER, source_.substr(start_, current_-start_), line_);
-                    tokens.push_back(token);
+                    tokens.push_back(scanDigit());
                     break;
                 }
 
                 if (isAlphadigit(c)) {
-                    while (isAlphadigit(peek())) advance();
-
-                    std::string lexeme = source_.substr(start_,current_-start_);
-                    TokenType type = TokenType::IDENTIFIER;
-
-                    auto it = keywords_.find(lexeme);
-                    if (it != keywords_.end()) {
-                        type = it->second;
-                    }
-
-                    tokens.push_back(Token(type, lexeme, line_));
+                    tokens.push_back(scanAlphadigit());
                     break;
                 }
 
